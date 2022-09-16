@@ -5,6 +5,11 @@ export interface Set {start: number, end: number}
 
 
 
+export interface CallBackProps {
+    setGenerateCallback: (callback: (cavnas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => void) => void
+}
+
+
 export interface FractalInterface {
     fractalType: string,
     save: () => void, 

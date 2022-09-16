@@ -2,14 +2,20 @@ import { useEffect, useState, useRef} from 'react';
 import { Container, Row, Col, InputGroup, Form, FormControl, FloatingLabel } from 'react-bootstrap';
 import { MandelbrotInterface, SierpinskiInterface } from '../helpers/interfaces';
 import Mandelbrot from "../helpers/mandelbrot";
-import { toSignedNumber, toUnsignedNumber } from '../pages/FractalEngine';
+import { toSignedNumber, toUnsignedNumber } from '../helpers/utils';
 
 
 
 // export const MandelbrotSettings = (props: any) => {
 export const MandelbrotSettings = (props: any) => {
     
+    console.log("START HERE???")
     const mandelbrot = props.mandelbrot as MandelbrotInterface
+    const mandelbrot1 = props.mandelbrot as MandelbrotInterface
+    const mandelbrot2 = props.mandelbrot as MandelbrotInterface
+    const mandelbrot3 = props.mandelbrot as MandelbrotInterface
+    const mandelbrot4 = props.mandelbrot as MandelbrotInterface
+    console.log("END HERE???")
 
     const [canvasWidth, setCanvasWidth] = useState(Number(1000).toString())
     const [canvasHeight, setCanvasHeight] = useState(Number(1000).toString())

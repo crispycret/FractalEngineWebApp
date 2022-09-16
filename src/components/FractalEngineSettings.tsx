@@ -9,7 +9,7 @@ import Mandelbrot from '../helpers/mandelbrot';
 import { Sierpinski } from '../helpers/sierpinski';
 import { SierpinskiSettings } from './SierpinskiSettings';
 
-import { CallBackProps } from '../pages/FractalEngine';
+import { CallBackProps } from '../helpers/interfaces';
 
 
 export const FractalEngineSettings = (props: CallBackProps) => {
@@ -46,7 +46,7 @@ export const FractalEngineSettings = (props: CallBackProps) => {
         setFractal(fractals[selectedIndex])
         setFractalName(fractalNames[selectedIndex])        
         props.setGenerateCallback(fractals[selectedIndex].draw);
-        fractals[selectedFractalIdx].load()
+        fractals[selectedIndex].load() // Load selected fractal's saved localStorage settings
     }
 
 

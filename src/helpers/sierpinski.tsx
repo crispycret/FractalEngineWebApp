@@ -18,10 +18,11 @@ export const Sierpinski = () => {
 
 
     const save = () => {
-        
+        console.log("SAVE SIERPINSKI")
     }
-    
+
     const load = () => {
+        console.log("LOAD SIERPINSKI")
         
     }
 

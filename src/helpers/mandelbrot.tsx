@@ -1,4 +1,5 @@
 import { Complex, MandelbrotInterface, Point, Set } from "./interfaces"
+import {createRandomColors} from "./utils"
 
 
 
@@ -28,6 +29,8 @@ export const Mandelbrot = () => {
     let colorRange = 32
     let zoom = 0.1
 
+    let rainbowColors = createRandomColors(colorRange);
+
     const setMaxIterations = (value: number) => {maxIterations = value; save()}
     const setEscapeRadius = (value: number) => {escapeRadius = value; save()}
     const setReal = (value: Set) => {real = value; save()}
@@ -37,6 +40,7 @@ export const Mandelbrot = () => {
 
     /* Put the settings in local storage */
     const save = () => {
+        console.log("SAVE MANDELBROT")
         localStorage.setItem("mandelbrot_maxIterations", maxIterations.toString())
         localStorage.setItem("mandelbrot_escapeRadius", escapeRadius.toString())
         localStorage.setItem("mandelbrot_realStart", real.start.toString())
@@ -51,8 +55,8 @@ export const Mandelbrot = () => {
     
     const load = () => {
 
+        console.log("LOAD MANDELBROT") 
         let temp = localStorage.getItem("mandelbrot_maxIterations")
-        console.log(temp) 
         maxIterations = temp == null ? MAX_ITERATIONS : Number.parseInt(temp)
 
         temp = localStorage.getItem("mandelbrot_escapeRadius") 
@@ -78,22 +82,13 @@ export const Mandelbrot = () => {
         
     }
 
-    
-    let rainbowColors = new Array(colorRange).fill(0).map(
-        (_,i) => i === 0 ? '#000' : `#${((1<<24) * Math.random() | 0).toString(16)}`
-    )
-
-    const createColorSchema = () => {
-        let rainbowColors = new Array(colorRange).fill(0).map(
-            (_,i) => i === 0 ? '#000' : `#${((1<<24) * Math.random() | 0).toString(16)}`
-        )    
-    }
 
 
     const init = () => {
-        load()
-        createColorSchema();
+        rainbowColors = createRandomColors(colorRange)
     }
+
+    init()
 
 
     /**

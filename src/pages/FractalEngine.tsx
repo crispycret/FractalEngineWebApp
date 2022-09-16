@@ -1,33 +1,17 @@
 import { useEffect, useRef, useState} from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
+import { CallBackProps } from "../helpers/interfaces";
 import {FractalEngineSettings } from "../components/FractalEngineSettings";
 
 
 
-export interface CallBackProps {
-    setGenerateCallback: (callback: (cavnas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => void) => void
-}
-
-
-export const toSignedNumber = (value: string) => {
-    return value.replace(/[^-0-9.]/g, '');
-}
-
-export const toUnsignedNumber = (value: string) => {
-    return value.replace(/[^0-9.]/g, '');
-}
 
 
 export const FractalEngine = () => {
 
-
-    const [canvasSize, setCanvasSize] = useState({width:600, height:400});
     let canvasRef = useRef<HTMLCanvasElement>(null);
     let ctx: CanvasRenderingContext2D;
-
-    const buildProps = () => {
-    }
 
     let generateCallback = (cavnas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {console.log("DEFAULT")};
 
@@ -42,9 +26,6 @@ export const FractalEngine = () => {
         let _ctx = canvasRef.current.getContext('2d');
         if (_ctx === null) return;
         ctx = _ctx
-
-        canvasRef.current.width = canvasSize.width;
-        canvasRef.current.height = canvasSize.height;
     }
 
     useEffect(() => {
