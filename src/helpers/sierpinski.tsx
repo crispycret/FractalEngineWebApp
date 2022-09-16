@@ -19,12 +19,13 @@ export const Sierpinski = () => {
     let rainbowColors = new Array(16).fill(0).map(
         (_,i) => i === 0 ? '#000' : `#${((1<<24) * Math.random() | 0).toString(16)}`
     )
+    let gradient: CanvasGradient;
     
     function random(min: number, max: number) {
         return Math.floor((Math.random())*(max-min+1))+min;
     }
 
-    const createTriangle = (pos: number[], sidelen: number, ctx: any, color: string) => {
+    const createTriangle = (pos: number[], sidelen: number, ctx: any, color: string|CanvasGradient) => {
 
         ctx.strokeStyle = color
         ctx.beginPath();
@@ -51,7 +52,8 @@ export const Sierpinski = () => {
 
         if(depth == 0) {
           innerTrianglesPositions.forEach((trianglePosition, i) => {
-            createTriangle(trianglePosition, innerTriangleSidelen, ctx, rainbowColors[random(0,rainbowColors.length-1)]);
+            createTriangle(trianglePosition, innerTriangleSidelen, ctx, gradient);
+            // createTriangle(trianglePosition, innerTriangleSidelen, ctx, rainbowColors[random(0,rainbowColors.length-1)]);
 
           });
         } else {
@@ -65,11 +67,21 @@ export const Sierpinski = () => {
     function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 
         
+
         canvas.width = canvasWidth
         canvas.height = canvasHeight
 
-        createSierpinskiTriangle([0, canvasHeight], canvasHeight, maxDepth, ctx);
+        gradient = ctx.createLinearGradient(canvasHeight/2, 0, canvasHeight, canvasWidth );
+        gradient.addColorStop(0, "magenta");
+        gradient.addColorStop(0.5 ,"blue");
+        gradient.addColorStop(1.0, "red");
+
+        let startY2 = canvasHeight - (canvasHeight * 0.25)
+        let startY = canvasHeight - (canvasHeight * 0.10)
+        createSierpinskiTriangle([0, startY], canvasHeight, maxDepth, ctx);
+        // createSierpinskiTriangle([0, canvasHeight], canvasHeight, maxDepth, ctx);
         // createSierpinskiTriangle([0, 1000], 1000, 5, ctx);
+
 
     }
 
