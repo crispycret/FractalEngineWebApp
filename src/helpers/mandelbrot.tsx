@@ -40,7 +40,6 @@ export const Mandelbrot = () => {
 
     /* Put the settings in local storage */
     const save = () => {
-        console.log("SAVE MANDELBROT")
         localStorage.setItem("mandelbrot_maxIterations", maxIterations.toString())
         localStorage.setItem("mandelbrot_escapeRadius", escapeRadius.toString())
         localStorage.setItem("mandelbrot_realStart", real.start.toString())
@@ -55,7 +54,6 @@ export const Mandelbrot = () => {
     
     const load = () => {
 
-        console.log("LOAD MANDELBROT") 
         let temp = localStorage.getItem("mandelbrot_maxIterations")
         maxIterations = temp == null ? MAX_ITERATIONS : Number.parseInt(temp)
 

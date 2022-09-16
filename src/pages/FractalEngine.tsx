@@ -57,9 +57,14 @@ export const FractalEngine = () => {
     return (
         <div>
 
-            <Row className="m-0" style={{backgroundColor: 'green', minHeight: '100vh'}}>
+            <Row className="m-0" style={{backgroundColor: 'black', minHeight: '100vh'}}>
                 
                 <Col style={{backgroundColor: 'blue'}} className='col-2 mx-0 px-1'>
+                    <Row className='my-1 mx-0 px-1'>
+                            <header>
+                                <a href="#">Fractal Engine</a>
+                            </header>
+                    </Row>
                     <Row className='my-1 mx-0 px-1'> <FractalEngineSettings {...props} />  </Row>
                     <Row className='my-1 mx-0 px-1'> { GenerateButton } </Row>
                 </Col>

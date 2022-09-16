@@ -39,6 +39,11 @@ export interface MandelbrotInterface  extends FractalInterface{
 
 
 export interface SierpinskiInterface extends FractalInterface{
+    maxDepth: number,
+    setMaxDepth: (value: number) => void,
+    strokeWidth: number, 
+    setStrokeWidth: (value: number) => void
+
 }
 
 

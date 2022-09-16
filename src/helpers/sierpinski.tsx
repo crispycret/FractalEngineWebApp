@@ -1,3 +1,4 @@
+import { off } from "process"
 import { useState } from "react"
 import { SierpinskiInterface } from "./interfaces"
 
@@ -14,16 +15,27 @@ export const Sierpinski = () => {
     const setCanvasWidth = (value: number) => {canvasWidth = value}
     const setCanvasHeight = (value: number) => {canvasHeight = value}
 
-    let maxDepth = 10
+    const MAX_DEPTH = 5
+    const STROKE_WIDTH = 6
+
+    let maxDepth = MAX_DEPTH
+    let strokeWidth = STROKE_WIDTH
+    
+    const setMaxDepth = (depth: number) => {maxDepth=depth; save()}
+    const setStrokeWidth = (width: number) => {strokeWidth=width; save(); }
 
 
     const save = () => {
-        console.log("SAVE SIERPINSKI")
+        localStorage.setItem("sierpinski_maxDepth", maxDepth.toString())        
+        localStorage.setItem("sierpinski_strokeWidth", strokeWidth.toString())        
     }
 
     const load = () => {
-        console.log("LOAD SIERPINSKI")
-        
+        let temp = localStorage.getItem("sierpinski_maxDepth")
+        maxDepth = temp == null ? MAX_DEPTH : Number.parseInt(temp)
+
+        temp = localStorage.getItem("sierpinski_strokeWidth")
+        strokeWidth = temp == null ? MAX_DEPTH : Number.parseInt(temp)
     }
 
 
@@ -37,8 +49,8 @@ export const Sierpinski = () => {
     }
 
     const createTriangle = (pos: number[], sidelen: number, ctx: any, color: string|CanvasGradient) => {
-
         ctx.strokeStyle = color
+        ctx.lineWidth = strokeWidth
         ctx.beginPath();
         ctx.moveTo(...pos); // go to the left vertex
       
@@ -77,21 +89,35 @@ export const Sierpinski = () => {
 
     function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 
-        
+        // To DO: Dynamically calculate the padding to center the sierpinski triangle
+        // Do this by taking the size of the canvas, the first line length and determine 
+        // where the first point should start from.
 
-        canvas.width = canvasWidth
-        canvas.height = canvasHeight
+        // canvas.width = canvasWidth
+        // canvas.height = canvasHeight
+
+        let temp = canvas.parentElement !== undefined  && canvas.parentElement !== null ? canvas.parentElement.clientWidth : canvas.width 
+        canvas.width = temp
+        canvas.height = temp
 
         gradient = ctx.createLinearGradient(canvasHeight/2, 0, canvasHeight, canvasWidth );
         gradient.addColorStop(0, "magenta");
         gradient.addColorStop(0.5 ,"blue");
         gradient.addColorStop(1.0, "red");
 
-        let startY2 = canvasHeight - (canvasHeight * 0.25)
-        let startY = canvasHeight - (canvasHeight * 0.10)
-        createSierpinskiTriangle([0, startY], canvasHeight, maxDepth, ctx);
-        // createSierpinskiTriangle([0, canvasHeight], canvasHeight, maxDepth, ctx);
-        // createSierpinskiTriangle([0, 1000], 1000, 5, ctx);
+        // Shave some of the height off of the canvas that will always remain empty due to how the
+        // the triangle is created
+        let newH = canvas.height - (canvas.height * .115)
+        canvas.height = newH
+
+        let offset = 0.05
+        let startX = canvas.width * offset
+        let startY = canvas.height - (canvas.height * offset * 1.5 )
+        let lineLength = canvas.width - (canvas.width * offset * 2)
+
+        createSierpinskiTriangle([startX, startY], lineLength, maxDepth, ctx);
+
+        // createSierpinskiTriangle([0, canvasHeight], canvasWidth, maxDepth, ctx);
 
 
     }
@@ -101,8 +127,13 @@ export const Sierpinski = () => {
         draw,
         load,
         save,
+
         canvasWidth, setCanvasWidth,
-        canvasHeight, setCanvasHeight
+        canvasHeight, setCanvasHeight,
+
+        maxDepth, setMaxDepth,
+        strokeWidth, setStrokeWidth
+        
     } as SierpinskiInterface
 
 }
