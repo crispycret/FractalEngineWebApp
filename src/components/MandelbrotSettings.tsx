@@ -91,7 +91,7 @@ export const MandelbrotSettings = (props: any) => {
     return (
         <Container className='mx-0 px-0'>
 
-            <Row className='mx-0 py-1'>
+            {/* <Row className='mx-0 py-1'>
                 <InputGroup.Text className='my-0 py-0'>Canvas</InputGroup.Text>
             </Row>
 
@@ -108,9 +108,7 @@ export const MandelbrotSettings = (props: any) => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {onChangeCanvasHeight(e as any)}}
                     />
                     </Col>
-            </Row>
-
-
+            </Row> */}
 
 
 
@@ -167,12 +165,9 @@ export const MandelbrotSettings = (props: any) => {
 
 
 
-
             <Row className='mx-0 py-1'>
                 <InputGroup.Text className='my-0 py-0'>Settings</InputGroup.Text>
             </Row>
-
-
 
             <Row className='mx-0 py-1'>
                 <Col className='col-6 mx-0 p-0 pe-1'>

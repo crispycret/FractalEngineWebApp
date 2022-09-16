@@ -7,11 +7,13 @@ export interface Set {start: number, end: number}
 
 export interface FractalInterface {
     fractalType: string,
+    save: () => void, 
+    load: () => void,
     draw: (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {}
     canvasWidth: number,
     setCanvasWidth: (value: number) => void,
     canvasHeight: number
-    setCanvasHeight: (value: number) => void,
+    setCanvasHeight: (value: number) => void
 }
 
 

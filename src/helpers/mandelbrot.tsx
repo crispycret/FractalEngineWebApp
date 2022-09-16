@@ -14,6 +14,12 @@ export const Mandelbrot = () => {
     const setCanvasWidth = (value: number) => {canvasWidth = value}
     const setCanvasHeight = (value: number) => {canvasHeight = value}
 
+    const MAX_ITERATIONS = 80
+    const ESCAPE_RAIDUS = 2.0
+    const REAL = {start: -2, end: 1} as Set
+    const IMAGINARY = {start: -1, end: 1} as Set
+    const COLOR_RANGE = 32
+    const ZOOM = 0.1
 
     let maxIterations = 80
     let escapeRadius = 2.0
@@ -22,12 +28,55 @@ export const Mandelbrot = () => {
     let colorRange = 32
     let zoom = 0.1
 
-    const setMaxIterations = (value: number) => {maxIterations = value}
-    const setEscapeRadius = (value: number) => {escapeRadius = value}
-    const setReal = (value: Set) => {real = value}
-    const setImaginary = (value: Set) => {imaginary = value}
-    const setColorRange = (value: number) => {colorRange = value}
-    const setZoom = (value: number) => {zoom = value}
+    const setMaxIterations = (value: number) => {maxIterations = value; save()}
+    const setEscapeRadius = (value: number) => {escapeRadius = value; save()}
+    const setReal = (value: Set) => {real = value; save()}
+    const setImaginary = (value: Set) => {imaginary = value; save()}
+    const setColorRange = (value: number) => {colorRange = value; save()}
+    const setZoom = (value: number) => {zoom = value; save()}
+
+    /* Put the settings in local storage */
+    const save = () => {
+        localStorage.setItem("mandelbrot_maxIterations", maxIterations.toString())
+        localStorage.setItem("mandelbrot_escapeRadius", escapeRadius.toString())
+        localStorage.setItem("mandelbrot_realStart", real.start.toString())
+        localStorage.setItem("mandelbrot_realEnd", real.end.toString())
+        localStorage.setItem("mandelbrot_imaginaryStart", imaginary.start.toString())
+        localStorage.setItem("mandelbrot_imaginaryEnd", imaginary.end.toString())
+        localStorage.setItem("mandelbrot_colorRange", colorRange.toString())
+        localStorage.setItem("mandelbrot_zoom", zoom.toString())
+    }
+
+
+    
+    const load = () => {
+
+        let temp = localStorage.getItem("mandelbrot_maxIterations")
+        console.log(temp) 
+        maxIterations = temp == null ? MAX_ITERATIONS : Number.parseInt(temp)
+
+        temp = localStorage.getItem("mandelbrot_escapeRadius") 
+        escapeRadius = temp == null ? ESCAPE_RAIDUS : Number.parseFloat(temp)
+
+        temp = localStorage.getItem("mandelbrot_realStart") 
+        real.start = temp == null ? REAL.start : Number.parseFloat(temp)
+
+        temp = localStorage.getItem("mandelbrot_realEnd") 
+        real.end = temp == null ? REAL.end : Number.parseFloat(temp)
+        
+        temp = localStorage.getItem("mandelbrot_imaginaryStart") 
+        imaginary.start = temp == null ? IMAGINARY.start : Number.parseFloat(temp)
+        
+        temp = localStorage.getItem("mandelbrot_imaginaryEnd") 
+        imaginary.end = temp == null ? IMAGINARY.end : Number.parseFloat(temp)
+                
+        temp = localStorage.getItem("mandelbrot_colorRange") 
+        colorRange = temp == null ? COLOR_RANGE : Number.parseInt(temp)
+
+        temp = localStorage.getItem("mandelbrot_zoom") 
+        zoom = temp == null ? ZOOM : Number.parseFloat(temp)
+        
+    }
 
     
     let rainbowColors = new Array(colorRange).fill(0).map(
@@ -42,6 +91,7 @@ export const Mandelbrot = () => {
 
 
     const init = () => {
+        load()
         createColorSchema();
     }
 
@@ -74,19 +124,11 @@ export const Mandelbrot = () => {
 
     function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 
-        console.log(canvas.parentElement?.clientWidth)
-        console.log(canvas.parentElement?.clientHeight)
+        if (canvas === null) return
+        if (ctx === null) return
 
         canvas.width = canvas.parentElement !== undefined  && canvas.parentElement !== null ? canvas.parentElement.clientWidth : canvas.width 
         canvas.height = canvas.parentElement !== undefined  && canvas.parentElement !== null ? canvas.parentElement.clientHeight : canvas.height 
-        
-        // canvas.width = canvasWidth
-        // canvas.height = canvasHeight
-
-        init()
-
-        if (canvas === null) return
-        if (ctx === null) return
 
         for (let i=0; i < canvas.width; i++) {
             for (let j=0; j< canvas.height; j++) {
@@ -109,6 +151,8 @@ export const Mandelbrot = () => {
     return {
         fractalType,
         draw,
+        save,
+        load,
         canvasWidth, setCanvasWidth,
         canvasHeight, setCanvasHeight,
 

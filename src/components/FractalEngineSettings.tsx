@@ -12,22 +12,10 @@ import { SierpinskiSettings } from './SierpinskiSettings';
 import { CallBackProps } from '../pages/FractalEngine';
 
 
-
-
-// const mandelbrot = ;
-// const sierpinski = ();
-
-
-
 export const FractalEngineSettings = (props: CallBackProps) => {
 
-    const fractalNames = [
-        'Mandelbrot', 'Sierpinski'
-    ]
-    const fractals = [
-        Mandelbrot(),
-        Sierpinski()
-    ]
+    const fractalNames = ['Mandelbrot', 'Sierpinski']
+    const fractals = [Mandelbrot(), Sierpinski()]
     const fractalSettings = [
         <MandelbrotSettings mandelbrot={fractals[0]} />,
         <SierpinskiSettings sierpinski={fractals[1]} />,
@@ -53,16 +41,12 @@ export const FractalEngineSettings = (props: CallBackProps) => {
 
     // When selecting a fractal to generate change the FractalEngine's generate method to the selected fractals draw method
     const onChangeFractal = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
-        let draw;
-        
-        let selectedName = e.currentTarget.value;
         let selectedIndex = e.target.selectedIndex
-
         setSelectedFractalIdx(selectedIndex)
         setFractal(fractals[selectedIndex])
         setFractalName(fractalNames[selectedIndex])        
         props.setGenerateCallback(fractals[selectedIndex].draw);
+        fractals[selectedFractalIdx].load()
     }
 
 

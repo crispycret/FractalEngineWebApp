@@ -16,6 +16,16 @@ export const Sierpinski = () => {
 
     let maxDepth = 10
 
+
+    const save = () => {
+        
+    }
+    
+    const load = () => {
+        
+    }
+
+
     let rainbowColors = new Array(16).fill(0).map(
         (_,i) => i === 0 ? '#000' : `#${((1<<24) * Math.random() | 0).toString(16)}`
     )
@@ -88,6 +98,8 @@ export const Sierpinski = () => {
     return {
         fractalType,
         draw,
+        load,
+        save,
         canvasWidth, setCanvasWidth,
         canvasHeight, setCanvasHeight
     } as SierpinskiInterface

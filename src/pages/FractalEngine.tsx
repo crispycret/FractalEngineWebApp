@@ -70,8 +70,7 @@ export const FractalEngine = () => {
         ctx.restore()
     }
 
-    const GenerateButton = 
-        <Button onClick={e => generate()}> Generate </Button>
+    const GenerateButton = <Button onClick={e => generate()}> Generate </Button>
 
 
     return (
