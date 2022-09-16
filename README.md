@@ -1,3 +1,24 @@
+# Fractal Engine Web App
+### Coded in React
+#### Author: Brandon Nadeau
+#### Version: 0.1.0 Beta
+## Live Demo: 
+[https://fractal-engine.herokuapp.com/](https://fractal-engine.herokuapp.com/)
+
+
+## Description:
+[In Development]
+
+This projects is a simple showcase of drawing fractal equations.
+
+### To Do:
+##### Canvas Browsing / Zoom 
+Zooming in the mandelbrot should trigger a redraw using the zoom level
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
